@@ -8,6 +8,7 @@ class App {
 		this.initRenderer();
 		this.initScene();
 		this.initCamera();
+		this.initControls();
 		this.initStats();
 		this.initGui();
 
@@ -45,6 +46,10 @@ class App {
 		this.scene = new THREE.Scene();
 	}
 
+	initControls = () => {
+		this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+	}
+
 	initGui = (controls, callback) => {
 		this.gui = new dat.GUI();
 	}
@@ -61,6 +66,11 @@ class App {
 	update = () => {
 		this.animate();
 		this.stats.update();
+		
+		if(this.controls) {
+			this.controls.update();
+		}
+
 		this.renderer.render(this.scene, this.camera);
 		requestAnimationFrame(this.update);
 	}
